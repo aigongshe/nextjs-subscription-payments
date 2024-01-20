@@ -68,7 +68,7 @@ export default async function Account() {
       <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            Account 账号信息
+            账号信息
           </h1>
           <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
             {/* We partnered with Stripe for a simplified billing. */}
@@ -90,7 +90,9 @@ export default async function Account() {
             {subscription ? (
               `${subscriptionPrice}/${subscription?.prices?.interval}`
             ) : (
-              <Link href="/">点击链接 选择购买</Link>
+              <Link href="/">
+                <a style={{ color: 'red', fontWeight: 'bold' }}>点击链接 选择购买</a>
+              </Link>
             )}
           </div>
         </Card>
