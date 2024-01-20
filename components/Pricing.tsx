@@ -29,7 +29,8 @@ interface Props {
   subscription: SubscriptionWithProduct | null;
 }
 
-type BillingInterval = 'lifetime' | 'year' | 'month';
+// type BillingInterval = 'lifetime' | 'year' | 'month';
+type BillingInterval = 'lifetime' | 'year' | 'month' | 'day' | 'week' | null;    //修改这里是根据supabase 的数据库进行的修改
 
 export default function Pricing({
   session,
@@ -167,12 +168,27 @@ export default function Pricing({
       <div className="max-w-6xl px-4 py-8 mx-auto sm:py-24 sm:px-6 lg:px-8">
         <div className="sm:flex sm:flex-col sm:align-center">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            Pricing Plans
+            订阅/购买计划
           </h1>
           <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
             免费试用，订阅服务开启你无缝连接GPT-4快速访问
           </p>
           <div className="relative self-center mt-6 bg-zinc-900 rounded-lg p-0.5 flex sm:mt-8 border border-zinc-800">
+            {intervals.includes(null) && (
+              <button
+                onClick={() => setBillingInterval(null)}
+                type="button"
+                className={`${
+                  billingInterval === null
+                    ? 'relative w-1/2 bg-zinc-700 border-zinc-800 shadow-sm text-white'
+                    : 'ml-0.5 relative w-1/2 border border-transparent text-zinc-400'
+                } rounded-md m-1 py-2 text-sm font-medium whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 focus:z-10 sm:w-auto sm:px-8`}
+              >
+                Lifetime billing
+                {/* 一次性订阅  */}
+              </button>
+            )}
+            
             {intervals.includes('month') && (
               <button
                 onClick={() => setBillingInterval('month')}
@@ -186,6 +202,7 @@ export default function Pricing({
                 Monthly billing
               </button>
             )}
+            
             {intervals.includes('year') && (
               <button
                 onClick={() => setBillingInterval('year')}
@@ -199,6 +216,7 @@ export default function Pricing({
                 Yearly billing
               </button>
             )}
+            
           </div>
         </div>
         <div className="mt-12 space-y-4 sm:mt-16 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-6 lg:max-w-4xl lg:mx-auto xl:max-w-none xl:mx-0 xl:grid-cols-3">
@@ -214,7 +232,7 @@ export default function Pricing({
             }).format((price?.unit_amount || 0) / 100);
             return (
               <div
-                key={product.id}
+                key={product.id}   // 使用price.id作为key，因为它是唯一的
                 className={cn(
                   'rounded-lg shadow-sm divide-y divide-zinc-600 bg-zinc-900',
                   {
@@ -224,6 +242,7 @@ export default function Pricing({
                   }
                 )}
               >
+                
                 <div className="p-6">
                   <h2 className="text-2xl font-semibold leading-6 text-white">
                     {product.name}
@@ -234,8 +253,14 @@ export default function Pricing({
                       {priceString}
                     </span>
                     <span className="text-base font-medium text-zinc-100">
-                      /{billingInterval}
+                    {/* 根据interval_count是否为null显示不同的文本 */}
+                    {price.interval_count === null
+                      ? ' / lifetime'
+                      : (price.interval_count && price.interval_count > 1
+                          ? ` / ${price.interval_count}`
+                          : '') + `  ${price.interval}`}
                     </span>
+                    
                   </p>
                   <Button
                     variant="slim"
