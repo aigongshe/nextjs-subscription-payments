@@ -31,7 +31,7 @@ export default function ManageSubscriptionButton({ session }: Props) {
         disabled={!session}
         onClick={redirectToCustomerPortal}
       >
-        Open customer portal
+        打开购买/订阅的计划详情
       </Button>
     </div>
   );
