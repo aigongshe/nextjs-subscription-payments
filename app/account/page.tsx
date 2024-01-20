@@ -68,20 +68,21 @@ export default async function Account() {
       <div className="max-w-6xl px-4 py-8 mx-auto sm:px-6 sm:pt-24 lg:px-8">
         <div className="sm:align-center sm:flex sm:flex-col">
           <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            Account
+            Account 账号信息
           </h1>
           <p className="max-w-2xl m-auto mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl">
-            We partnered with Stripe for a simplified billing.
+            {/* We partnered with Stripe for a simplified billing. */}
+            我们使用Stripe进行账单管理
           </p>
         </div>
       </div>
       <div className="p-4">
         <Card
-          title="Your Plan"
+          title="你的订阅计划"
           description={
             subscription
-              ? `You are currently on the ${subscription?.prices?.products?.name} plan.`
-              : 'You are not currently subscribed to any plan.'
+              ? `你现在正在订阅/购买 ${subscription?.prices?.products?.name} 服务.`
+              : '你现在还没有订阅/购买任何服务'
           }
           footer={<ManageSubscriptionButton session={session} />}
         >
@@ -89,7 +90,7 @@ export default async function Account() {
             {subscription ? (
               `${subscriptionPrice}/${subscription?.prices?.interval}`
             ) : (
-              <Link href="/">Choose your plan</Link>
+              <Link href="/">点击链接 选择购买</Link>
             )}
           </div>
         </Card>
