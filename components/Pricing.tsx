@@ -90,7 +90,7 @@ export default function Pricing({
             .
           </p>
         </div>
-        <LogoCloud />
+      {/*  <LogoCloud /> */}
       </section>
     );
 
@@ -157,7 +157,7 @@ export default function Pricing({
               })}
             </div>
           </div>
-          <LogoCloud />
+        {/* <LogoCloud /> */}
         </div>
       </section>
     );
@@ -253,7 +253,7 @@ export default function Pricing({
             );
           })}
         </div>
-        <LogoCloud />
+      {/* <LogoCloud /> */}
       </div>
     </section>
   );
