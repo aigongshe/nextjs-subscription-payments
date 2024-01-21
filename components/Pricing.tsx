@@ -47,7 +47,8 @@ export default function Pricing({
   );
   const router = useRouter();
   const [billingInterval, setBillingInterval] =
-    useState<BillingInterval>('month');
+    // useState<BillingInterval>('month');
+    useState<BillingInterval>('lifetime');  //考虑到目前的模式设定为lifetime
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
 
   const handleCheckout = async (price: Price) => {
