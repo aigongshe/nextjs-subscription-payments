@@ -52,7 +52,13 @@ export async function POST(req: Request) {
       } else if (price.type === 'one_time') {
         session = await stripe.checkout.sessions.create({
           // payment_method_types: ['card'],
-          payment_method_types: ['wechat_pay','alipay','card'],
+          payment_method_types: ['wechat_pay','card'],
+          // Specify the client (currently, Checkout only supports a client value of "web")
+          payment_method_options: {
+            wechat_pay: {
+              client: 'web',
+            },
+          },
           billing_address_collection: 'required',
           customer,
           customer_update: {
